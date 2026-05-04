@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "276591760693",
+    "project_id": "latihanfirebase-10990",
+    "storage_bucket": "latihanfirebase-10990.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276591760693:android:c39933ea11e038276ae87c",
+        "android_client_info": {
+          "package_name": "android.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276591760693-3o8tqpalc2h9die7f0b93fumivig1ljc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP1NvzcdCLSgrc_Cgrlxr9b_zipVUkPKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "276591760693-3o8tqpalc2h9die7f0b93fumivig1ljc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276591760693:android:6f1ebba921000e856ae87c",
+        "android_client_info": {
+          "package_name": "com.example.appsmarketplace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276591760693-3o8tqpalc2h9die7f0b93fumivig1ljc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDP1NvzcdCLSgrc_Cgrlxr9b_zipVUkPKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "276591760693-3o8tqpalc2h9die7f0b93fumivig1ljc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

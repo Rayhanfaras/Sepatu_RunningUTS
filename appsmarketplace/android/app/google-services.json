@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "782984344795",
+    "project_id": "toko-sepatu-running",
+    "storage_bucket": "toko-sepatu-running.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782984344795:android:fdf3062e03cd00792c08fe",
+        "android_client_info": {
+          "package_name": "Toko_sepatu.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782984344795-lidi3h1lnp5lre4iv5d5d4jfmfcs164n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhP3XgYqxNcsHD0XfW73GnMcOemfSebsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782984344795-lidi3h1lnp5lre4iv5d5d4jfmfcs164n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "782984344795-7010mcre7uu7fsr1d63o4afvgagqvf5g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appsmarketplace"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782984344795:android:de92e573b0c99f7d2c08fe",
+        "android_client_info": {
+          "package_name": "com.example.appsmarketplace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782984344795-lidi3h1lnp5lre4iv5d5d4jfmfcs164n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhP3XgYqxNcsHD0XfW73GnMcOemfSebsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782984344795-lidi3h1lnp5lre4iv5d5d4jfmfcs164n.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "782984344795-7010mcre7uu7fsr1d63o4afvgagqvf5g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.appsmarketplace"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
