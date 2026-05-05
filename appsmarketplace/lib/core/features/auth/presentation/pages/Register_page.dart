@@ -53,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(auth.errorMessage ?? 'Pendaftaran gagal'),
+          content: Text(auth.errorMessage ?? 'Pendaftaran ini gagal'),
           backgroundColor: Colors.red,
         ),
       );
