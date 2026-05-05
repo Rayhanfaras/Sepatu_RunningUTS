@@ -14,7 +14,7 @@ func main() {
 
 	products := []models.Product{
 	{
-		Name:        "Ortuseight mils",
+		Name:        "Mils",
 		Price:       399000,
 		Category:    "Running",
 		Stock:       50,
@@ -22,7 +22,7 @@ func main() {
 		ImageURL:    "https://i.ibb.co.com/5xcqt8rJ/mils-running.jpg",
 	},
 	{
-		Name:        "Nike Revolution 6",
+		Name:        "Adizero",
 		Price:       599000,
 		Category:    "Running",
 		Stock:       40,
