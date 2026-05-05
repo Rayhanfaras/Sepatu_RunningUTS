@@ -14,9 +14,9 @@ func main() {
 
 	products := []models.Product{
 	{
-		Name:        "Ortuseight Hyperblast",
+		Name:        "Ortuseight mils",
 		Price:       399000,
-		Category:    "Running mils",
+		Category:    "Running",
 		Stock:       50,
 		Description: "Sepatu running ringan dengan cushioning empuk, cocok untuk latihan harian",
 		ImageURL:    "https://i.ibb.co.com/5xcqt8rJ/mils-running.jpg",
