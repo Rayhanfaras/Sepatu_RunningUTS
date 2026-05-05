@@ -19,7 +19,7 @@ func main() {
 		Category:    "Running",
 		Stock:       50,
 		Description: "Sepatu running ringan dengan cushioning empuk, cocok untuk latihan harian",
-		ImageURL:    "https://picsum.photos/400",
+		ImageURL:    "https://i.ibb.co.com/5xcqt8rJ/mils-running.jpg",
 	},
 	{
 		Name:        "Nike Revolution 6",
