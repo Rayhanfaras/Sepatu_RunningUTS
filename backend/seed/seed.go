@@ -27,7 +27,7 @@ func main() {
 		Category:    "Running",
 		Stock:       40,
 		Description: "Sepatu lari nyaman dengan desain modern dan breathable upper",
-		ImageURL:    "https://picsum.photos/401",
+		ImageURL:    "https://i.ibb.co.com/d071Q1t7/adizero-biru.jpg",
 	},
 	{
 		Name:        "Adidas Duramo 10",
