@@ -40,8 +40,7 @@ class DompetKampusPayService {
 
   // ───────────────── Stream ─────────────────
   /// BroadcastStream: boleh punya banyak listener sekaligus.
-  final _callbackController =
-      StreamController<PaymentCallbackData>.broadcast();
+  final _callbackController = StreamController<PaymentCallbackData>.broadcast();
 
   Stream<PaymentCallbackData> get onCallback => _callbackController.stream;
 
@@ -79,8 +78,7 @@ class DompetKampusPayService {
     // KASUS 2: Deeplink masuk saat app sudah berjalan (background / foreground)
     appLinks.uriLinkStream.listen(
       (uri) => _handleUri(uri),
-      onError: (err) =>
-          debugPrint('[DKPayService] URI stream error: $err'),
+      onError: (err) => debugPrint('[DKPayService] URI stream error: $err'),
     );
   }
 
@@ -93,11 +91,14 @@ class DompetKampusPayService {
     if (uri.scheme == 'pasarmalam' && uri.host == 'payment-callback') {
       final status = uri.queryParameters['status'] ?? 'unknown';
       final reference = uri.queryParameters['reference'] ?? '';
-      final transactionId = uri.queryParameters['transaction_id'] ??
+      final transactionId =
+          uri.queryParameters['transaction_id'] ??
           uri.queryParameters['transactionId'] ??
           '';
 
-      debugPrint('[DKPayService] Callback params: status=$status, ref=$reference, txId=$transactionId');
+      debugPrint(
+        '[DKPayService] Callback params: status=$status, ref=$reference, txId=$transactionId',
+      );
 
       final data = PaymentCallbackData(
         status: status,
@@ -114,7 +115,9 @@ class DompetKampusPayService {
       // Broadcast ke semua listener yang sudah subscribe
       _callbackController.add(data);
     } else {
-      debugPrint('[DKPayService] URI diabaikan (scheme/host tidak cocok): ${uri.scheme}://${uri.host}');
+      debugPrint(
+        '[DKPayService] URI diabaikan (scheme/host tidak cocok): ${uri.scheme}://${uri.host}',
+      );
     }
   }
 
