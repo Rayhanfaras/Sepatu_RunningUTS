@@ -19,3 +19,4 @@
 - chore: verifikasi token firebase di backend
 - fix: pastikan endpoint get products merespon dengan baik
 - chore: rapihkan environment variables
+- fix: finalisasi koneksi frontend ke backend lokal
