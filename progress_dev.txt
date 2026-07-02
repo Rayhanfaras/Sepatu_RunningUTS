@@ -2,3 +2,4 @@
 
 - docs: catat error no pubspec.yaml saat run flutter
 - chore: pindah direktori ke appsmarketplace sebelum run
+- fix: handle error connection timeout ke backend
