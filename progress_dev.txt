@@ -9,3 +9,4 @@
 - docs: catat solusi cek password akun firebase
 - chore: restart backend go karena exit status 0xc000013a
 - fix: atasi masalah flutter run nyangkut di installing apk
+- docs: catat solusi cabut pasang kabel usb vivo
