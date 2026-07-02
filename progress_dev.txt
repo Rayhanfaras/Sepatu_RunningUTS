@@ -13,3 +13,4 @@
 - chore: bersihkan aplikasi lama dari device untuk hindari bentrok signature
 - fix: pastikan backend berjalan di port 8081
 - docs: tambah log hasil ipconfig
+- chore: cek koneksi adb ke hp vivo
