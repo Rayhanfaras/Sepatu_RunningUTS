@@ -11,3 +11,4 @@
 - fix: atasi masalah flutter run nyangkut di installing apk
 - docs: catat solusi cabut pasang kabel usb vivo
 - chore: bersihkan aplikasi lama dari device untuk hindari bentrok signature
+- fix: pastikan backend berjalan di port 8081
