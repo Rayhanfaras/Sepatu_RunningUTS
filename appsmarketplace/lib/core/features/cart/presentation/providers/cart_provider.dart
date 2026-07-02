@@ -61,4 +61,35 @@ class CartProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<Map<String, dynamic>> processCheckout({
+    required String shippingAddress,
+    required String notes,
+    required String paymentMethod,
+  }) async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      final res = await DioClient.instance.post(
+        '/orders/checkout',
+        data: {
+          "shipping_address": shippingAddress,
+          "notes": notes,
+          "payment_method": paymentMethod,
+        },
+      );
+
+      items = [];
+      totalPrice = 0;
+      isLoading = false;
+      notifyListeners();
+
+      return res.data['data'] as Map<String, dynamic>;
+    } catch (e) {
+      isLoading = false;
+      notifyListeners();
+      rethrow;
+    }
+  }
 }

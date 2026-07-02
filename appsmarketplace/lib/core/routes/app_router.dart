@@ -7,6 +7,8 @@ import '../features/auth/presentation/pages/login_page.dart';
 import '../features/auth/presentation/pages/Register_page.dart';
 import '../features/auth/presentation/pages/Verify_email_page.dart';
 import '../features/auth/presentation/pages/dashboard_page.dart';
+import 'package:appsmarketplace/features/order/presentation/pages/checkout_page.dart';
+import 'package:appsmarketplace/features/order/presentation/pages/payment_pending_page.dart';
 
 import '../services/secure_storage.dart';
 
@@ -16,6 +18,8 @@ class AppRouter {
   static const String register = '/register';
   static const String verifyEmail = '/verify-email';
   static const String dashboard = '/dashboard';
+  static const String checkout = '/checkout';
+  static const String paymentPending = '/payment-pending';
 
   static Map<String, WidgetBuilder> get routes => {
     splash: (_) => const SplashPage(),
@@ -25,6 +29,14 @@ class AppRouter {
 
     // Dashboard dibungkus AuthGuard (Si Satpam)
     dashboard: (_) => const AuthGuard(child: DashboardPage()),
+    checkout: (_) => const CheckoutPage(),
+    paymentPending: (context) {
+      final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+      return PaymentPendingPage(
+        reference: args['reference'] as String,
+        amount: args['amount'] as double,
+      );
+    },
   };
 }
 

@@ -1,5 +1,15 @@
+import 'package:flutter/foundation.dart';
+
 class ApiConstants {
-  static const String baseUrl = 'http://192.168.43.90:8081/v1';
+  static String get baseUrl {
+    if (kIsWeb) {
+      // Use localhost for web if your backend runs on the same machine.
+      // Change this to the server IP if needed, e.g. 'http://192.168.1.14:8081/v1'.
+      return 'http://localhost:8081/v1';
+    }
+
+    return 'http://192.168.1.4:8081/v1';
+  }
 
   // Auth endpoints
   static const String verifyToken = '/auth/verify-token';

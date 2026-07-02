@@ -6,12 +6,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'core/services/auth_provider.dart' as auth_provider;
+import 'package:appsmarketplace/core/services/dompet_kampus_pay_service.dart';
 import 'app.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await DompetKampusPayService.instance.init();
 
   runApp(
     MultiProvider(

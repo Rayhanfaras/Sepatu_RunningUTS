@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:appsmarketplace/core/features/cart/presentation/providers/cart_provider.dart';
+import 'package:appsmarketplace/core/routes/app_router.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -11,8 +12,6 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   Map<int, String> selectedSizes = {};
-
-  bool isCheckingOut = false;
 
   String formatPrice(num price) {
     return price
@@ -30,35 +29,6 @@ class _CartPageState extends State<CartPage> {
     Future.microtask(() {
       context.read<CartProvider>().fetchCart();
     });
-  }
-
-  Future<void> _simulateCheckout() async {
-    setState(() {
-      isCheckingOut = true;
-    });
-
-    // ⏳ simulasi loading
-    await Future.delayed(const Duration(seconds: 1));
-
-    // 🧠 kosongkan cart (tanpa backend)
-    final cart = context.read<CartProvider>();
-    cart.items.clear();
-    cart.totalPrice = 0;
-    cart.notifyListeners();
-
-    setState(() {
-      isCheckingOut = false;
-    });
-
-    if (!mounted) return;
-
-    // 🎉 success message
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text("Checkout berhasil 🎉"),
-        backgroundColor: Colors.green,
-      ),
-    );
   }
 
   @override
@@ -246,20 +216,13 @@ class _CartPageState extends State<CartPage> {
 
                 const SizedBox(height: 12),
 
-                SizedBox(
+                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: isCheckingOut ? null : _simulateCheckout,
-                    child: isCheckingOut
-                        ? const SizedBox(
-                            height: 18,
-                            width: 18,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Colors.white,
-                            ),
-                          )
-                        : const Text("Checkout"),
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRouter.checkout);
+                    },
+                    child: const Text("Checkout"),
                   ),
                 ),
               ],
