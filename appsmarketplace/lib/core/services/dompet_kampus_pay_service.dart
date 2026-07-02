@@ -1,104 +1,152 @@
 import 'dart:async';
+import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
-import 'package:uni_links/uni_links.dart';
 
+/// Model data yang diterima saat Dompet Kampus Global memanggil callback.
 class PaymentCallbackData {
   final String status;
   final String reference;
   final String transactionId;
 
-  PaymentCallbackData({
+  const PaymentCallbackData({
     required this.status,
     required this.reference,
     required this.transactionId,
   });
 
+  /// Helper agar tidak perlu membandingkan string di mana-mana.
+  bool get isSuccess => status == 'success';
+
   @override
-  String toString() {
-    return 'PaymentCallbackData(status: $status, reference: $reference, transactionId: $transactionId)';
-  }
+  String toString() =>
+      'PaymentCallbackData(status: $status, reference: $reference, transactionId: $transactionId)';
 }
 
+/// Service singleton untuk menangani deeplink dua arah dengan Dompet Kampus Global.
+///
+/// Outgoing : Pasar Malam → dompetkampus://pay?...
+/// Incoming  : pasarmalam://payment-callback?status=success&reference=INV-42
 class DompetKampusPayService {
+  // ───────────────── Singleton ─────────────────
+  static final DompetKampusPayService _instance =
+      DompetKampusPayService._internal();
+
+  factory DompetKampusPayService() => _instance;
+
+  /// Alias statis agar kode lama (DompetKampusPayService.instance) tetap bekerja.
+  static DompetKampusPayService get instance => _instance;
+
   DompetKampusPayService._internal();
 
-  static final DompetKampusPayService instance = DompetKampusPayService._internal();
-
-  final StreamController<PaymentCallbackData> _callbackController =
+  // ───────────────── Stream ─────────────────
+  /// BroadcastStream: boleh punya banyak listener sekaligus.
+  final _callbackController =
       StreamController<PaymentCallbackData>.broadcast();
 
   Stream<PaymentCallbackData> get onCallback => _callbackController.stream;
 
+  // ───────────────── Cold-start buffer ─────────────────
+  /// Simpan callback yang datang sebelum widget tree siap (cold start).
   PaymentCallbackData? _pendingCallback;
 
+  /// Konsumsi sekali — setelah diambil, dihapus dari buffer.
   PaymentCallbackData? consumePendingCallback() {
-    final callback = _pendingCallback;
+    final data = _pendingCallback;
     _pendingCallback = null;
-    return callback;
+    return data;
   }
 
+  // ───────────────── Inisialisasi ─────────────────
   Future<void> init() async {
     if (kIsWeb) {
-      debugPrint('Skipping deep link initialization on web');
+      debugPrint('[DKPayService] Web platform — skip deeplink init.');
       return;
     }
 
+    final appLinks = AppLinks();
+
+    // KASUS 1: App dibuka oleh deeplink (cold start)
     try {
-      final initialUri = await getInitialUri();
+      final initialUri = await appLinks.getInitialLink();
       if (initialUri != null) {
-        _handleUri(initialUri);
+        debugPrint('[DKPayService] Cold-start URI: $initialUri');
+        _handleUri(initialUri, isColdStart: true);
       }
     } catch (e) {
-      debugPrint('Failed to get initial link: $e');
+      debugPrint('[DKPayService] Failed to get initial link: $e');
     }
 
-    uriLinkStream.listen((Uri? uri) {
-      if (uri != null) {
-        _handleUri(uri);
-      }
-    }, onError: (err) {
-      debugPrint('Failed to process uri stream error: $err');
-    });
+    // KASUS 2: Deeplink masuk saat app sudah berjalan (background / foreground)
+    appLinks.uriLinkStream.listen(
+      (uri) => _handleUri(uri),
+      onError: (err) =>
+          debugPrint('[DKPayService] URI stream error: $err'),
+    );
   }
 
-  void _handleUri(Uri uri) {
-    debugPrint('Received DeepLink URI: $uri');
-    if (uri.scheme == 'mycatalog' && uri.host == 'payment-callback') {
-      final status = uri.queryParameters['status'] ?? '';
+  // ───────────────── Handler ─────────────────
+  void _handleUri(Uri uri, {bool isColdStart = false}) {
+    debugPrint('[DKPayService] URI diterima: $uri');
+    debugPrint('[DKPayService] Cold start: $isColdStart');
+
+    // Hanya proses URI callback dari Dompet Kampus Global
+    if (uri.scheme == 'pasarmalam' && uri.host == 'payment-callback') {
+      final status = uri.queryParameters['status'] ?? 'unknown';
       final reference = uri.queryParameters['reference'] ?? '';
-      final transactionId = uri.queryParameters['transactionId'] ??
-          uri.queryParameters['transaction_id'] ??
+      final transactionId = uri.queryParameters['transaction_id'] ??
+          uri.queryParameters['transactionId'] ??
           '';
 
-      if (status.isNotEmpty && reference.isNotEmpty) {
-        final data = PaymentCallbackData(
-          status: status,
-          reference: reference,
-          transactionId: transactionId,
-        );
+      debugPrint('[DKPayService] Callback params: status=$status, ref=$reference, txId=$transactionId');
 
-        if (_callbackController.hasListener) {
-          _callbackController.add(data);
-        } else {
-          _pendingCallback = data;
-        }
+      final data = PaymentCallbackData(
+        status: status,
+        reference: reference,
+        transactionId: transactionId,
+      );
+
+      // Buffer untuk cold start (widget tree belum siap)
+      if (isColdStart) {
+        _pendingCallback = data;
+        debugPrint('[DKPayService] Disimpan sebagai pendingCallback.');
       }
+
+      // Broadcast ke semua listener yang sudah subscribe
+      _callbackController.add(data);
+    } else {
+      debugPrint('[DKPayService] URI diabaikan (scheme/host tidak cocok): ${uri.scheme}://${uri.host}');
     }
   }
 
+  // ───────────────── Build Deeplink Outgoing ─────────────────
+  /// Buat URL deeplink untuk membuka Dompet Kampus Global.
+  ///
+  /// Output: `dompetkampus://pay?merchant_id=...&amount=...&reference=...&callback=...`
   static String buildDeeplinkUrl({
     required String reference,
     required double amount,
+    String merchantId = 'MCH_PASAR_MALAM',
+    String merchantName = 'Pasar Malam',
+    String? description,
   }) {
-    return Uri(
+    final uri = Uri(
       scheme: 'dompetkampus',
       host: 'pay',
       queryParameters: {
+        'merchant_id': merchantId,
+        'merchant_name': merchantName,
+        'amount': amount.toInt().toString(),
+        'description': (description != null && description.isNotEmpty)
+            ? description
+            : 'Pembayaran $reference',
         'reference': reference,
-        'amount': amount.toStringAsFixed(0),
-        'callback_url': 'mycatalog://payment-callback',
+        'callback': 'pasarmalam://payment-callback',
       },
-    ).toString();
+    );
+
+    final urlStr = uri.toString();
+    debugPrint('[DKPayService] Deeplink outgoing: $urlStr');
+    return urlStr;
   }
 
   void dispose() {
