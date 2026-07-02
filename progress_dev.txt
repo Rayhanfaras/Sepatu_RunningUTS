@@ -7,3 +7,4 @@
 - chore: pastikan hp dan laptop di jaringan wifi yang sama
 - fix: atasi firebase auth invalid credential
 - docs: catat solusi cek password akun firebase
+- chore: restart backend go karena exit status 0xc000013a
