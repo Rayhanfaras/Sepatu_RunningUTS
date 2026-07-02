@@ -6,3 +6,4 @@
 - docs: tambah catatan solusi mematikan windows firewall
 - chore: pastikan hp dan laptop di jaringan wifi yang sama
 - fix: atasi firebase auth invalid credential
+- docs: catat solusi cek password akun firebase
