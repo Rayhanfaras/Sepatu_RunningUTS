@@ -16,3 +16,4 @@
 - chore: cek koneksi adb ke hp vivo
 - fix: jangan gunakan localhost atau 127.0.0.1 di hp fisik
 - docs: catat peringatan mematikan data seluler saat testing
+- chore: verifikasi token firebase di backend
