@@ -79,9 +79,10 @@ class _SplashPageState extends State<SplashPage> {
     await Future.delayed(const Duration(seconds: 2)); // Animasi splash
     if (!mounted) return;
 
-    final token = await SecureStorage.getToken();
-    final route = token != null ? AppRouter.dashboard : AppRouter.login;
-    Navigator.pushReplacementNamed(context, route);
+    // WAJIB LOGIN: Hapus token & sesi firebase setiap kali aplikasi dibuka
+    await context.read<AuthProvider>().logout();
+
+    Navigator.pushReplacementNamed(context, AppRouter.login);
   }
 
   @override
