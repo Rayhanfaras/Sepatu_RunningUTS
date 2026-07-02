@@ -8,7 +8,7 @@ class ApiConstants {
       return 'http://localhost:8081/v1';
     }
 
-    return 'http://192.168.1.4:8081/v1';
+    return 'http://127.0.0.1:8081/v1';
   }
 
   // Auth endpoints
